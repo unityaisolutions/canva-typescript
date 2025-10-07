@@ -121,6 +121,7 @@ import {
   URLImports,
 } from './resources/url-imports';
 import {
+  CustomDesignTypeInput,
   Design,
   DesignCreateParams,
   DesignCreateResponse,
@@ -130,6 +131,7 @@ import {
   DesignRetrieveResponse,
   DesignTypeInput,
   Designs,
+  PresetDesignTypeInput,
 } from './resources/designs/designs';
 import { Users } from './resources/users/users';
 import { type Fetch } from './internal/builtin-types';
@@ -937,9 +939,11 @@ export declare namespace Canva {
 
   export {
     Designs as Designs,
+    type CustomDesignTypeInput as CustomDesignTypeInput,
     type Design as Design,
     type DesignLinks as DesignLinks,
     type DesignTypeInput as DesignTypeInput,
+    type PresetDesignTypeInput as PresetDesignTypeInput,
     type DesignCreateResponse as DesignCreateResponse,
     type DesignRetrieveResponse as DesignRetrieveResponse,
     type DesignListResponse as DesignListResponse,
@@ -1006,4 +1010,6 @@ export declare namespace Canva {
   };
 
   export { Users as Users };
+
+  export type TeamUser = API.TeamUser;
 }

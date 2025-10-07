@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -126,7 +127,7 @@ export interface ParentComment {
   /**
    * @deprecated The Canva users mentioned in the comment.
    */
-  mentions: { [key: string]: ParentComment.Mentions };
+  mentions: { [key: string]: Shared.TeamUser };
 
   /**
    * The comment message. This is the comment body shown in the Canva UI. User
@@ -164,28 +165,6 @@ export interface ParentComment {
   updated_at?: number;
 }
 
-export namespace ParentComment {
-  /**
-   * Metadata for the user, consisting of the User ID, Team ID, and display name.
-   */
-  export interface Mentions {
-    /**
-     * The name of the user as shown in the Canva UI.
-     */
-    display_name?: string;
-
-    /**
-     * The ID of the user's Canva Team.
-     */
-    team_id?: string;
-
-    /**
-     * The ID of the user.
-     */
-    user_id?: string;
-  }
-}
-
 /**
  * @deprecated Data about the reply comment, including the message, author, and the
  * object (such as a design) the comment is attached to.
@@ -204,7 +183,7 @@ export interface ReplyComment {
   /**
    * @deprecated The Canva users mentioned in the comment.
    */
-  mentions: { [key: string]: ReplyComment.Mentions };
+  mentions: { [key: string]: Shared.TeamUser };
 
   /**
    * The comment message. This is the comment body shown in the Canva UI. User
@@ -236,28 +215,6 @@ export interface ReplyComment {
    * since the Unix Epoch).
    */
   updated_at?: number;
-}
-
-export namespace ReplyComment {
-  /**
-   * Metadata for the user, consisting of the User ID, Team ID, and display name.
-   */
-  export interface Mentions {
-    /**
-     * The name of the user as shown in the Canva UI.
-     */
-    display_name?: string;
-
-    /**
-     * The ID of the user's Canva Team.
-     */
-    team_id?: string;
-
-    /**
-     * The ID of the user.
-     */
-    user_id?: string;
-  }
 }
 
 /**

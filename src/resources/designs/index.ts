@@ -10,9 +10,11 @@ export {
 } from './comments/index';
 export {
   Designs,
+  type CustomDesignTypeInput,
   type Design,
   type DesignLinks,
   type DesignTypeInput,
+  type PresetDesignTypeInput,
   type DesignCreateResponse,
   type DesignRetrieveResponse,
   type DesignListResponse,

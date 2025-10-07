@@ -1,3 +1,9 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">TeamUser</a></code>
+
 # Apps
 
 Types:
@@ -100,9 +106,11 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/designs/designs.ts">CustomDesignTypeInput</a></code>
 - <code><a href="./src/resources/designs/designs.ts">Design</a></code>
 - <code><a href="./src/resources/designs/designs.ts">DesignLinks</a></code>
 - <code><a href="./src/resources/designs/designs.ts">DesignTypeInput</a></code>
+- <code><a href="./src/resources/designs/designs.ts">PresetDesignTypeInput</a></code>
 - <code><a href="./src/resources/designs/designs.ts">DesignCreateResponse</a></code>
 - <code><a href="./src/resources/designs/designs.ts">DesignRetrieveResponse</a></code>
 - <code><a href="./src/resources/designs/designs.ts">DesignListResponse</a></code>

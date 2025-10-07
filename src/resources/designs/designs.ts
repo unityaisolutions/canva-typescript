@@ -89,6 +89,23 @@ export class Designs extends APIResource {
 }
 
 /**
+ * Provide the width and height to define a custom design type.
+ */
+export interface CustomDesignTypeInput {
+  /**
+   * The height of the design, in pixels.
+   */
+  height: number;
+
+  type: 'custom';
+
+  /**
+   * The width of the design, in pixels.
+   */
+  width: number;
+}
+
+/**
  * The design object, which contains metadata about the design.
  */
 export interface Design {
@@ -164,44 +181,25 @@ export interface DesignLinks {
 /**
  * The desired design type.
  */
-export type DesignTypeInput = DesignTypeInput.PresetDesignTypeInput | DesignTypeInput.CustomDesignTypeInput;
+export type DesignTypeInput = PresetDesignTypeInput | CustomDesignTypeInput;
 
-export namespace DesignTypeInput {
+/**
+ * Provide the common design type.
+ */
+export interface PresetDesignTypeInput {
   /**
-   * Provide the common design type.
+   * The name of the design type.
+   *
+   * - `doc` - A [Canva doc](https://www.canva.com/docs/); a document for Canva's
+   *   online text editor.
+   * - `whiteboard` - A [whiteboard](https://www.canva.com/online-whiteboard/); a
+   *   design which gives you infinite space to collaborate.
+   * - `presentation` - A [presentation](https://www.canva.com/presentations/); lets
+   *   you create and collaborate for presenting to an audience.
    */
-  export interface PresetDesignTypeInput {
-    /**
-     * The name of the design type.
-     *
-     * - `doc` - A [Canva doc](https://www.canva.com/docs/); a document for Canva's
-     *   online text editor.
-     * - `whiteboard` - A [whiteboard](https://www.canva.com/online-whiteboard/); a
-     *   design which gives you infinite space to collaborate.
-     * - `presentation` - A [presentation](https://www.canva.com/presentations/); lets
-     *   you create and collaborate for presenting to an audience.
-     */
-    name: 'doc' | 'whiteboard' | 'presentation';
+  name: 'doc' | 'whiteboard' | 'presentation';
 
-    type: 'preset';
-  }
-
-  /**
-   * Provide the width and height to define a custom design type.
-   */
-  export interface CustomDesignTypeInput {
-    /**
-     * The height of the design, in pixels.
-     */
-    height: number;
-
-    type: 'custom';
-
-    /**
-     * The width of the design, in pixels.
-     */
-    width: number;
-  }
+  type: 'preset';
 }
 
 /**
@@ -293,9 +291,11 @@ Designs.ExportFormats = ExportFormats;
 
 export declare namespace Designs {
   export {
+    type CustomDesignTypeInput as CustomDesignTypeInput,
     type Design as Design,
     type DesignLinks as DesignLinks,
     type DesignTypeInput as DesignTypeInput,
+    type PresetDesignTypeInput as PresetDesignTypeInput,
     type DesignCreateResponse as DesignCreateResponse,
     type DesignRetrieveResponse as DesignRetrieveResponse,
     type DesignListResponse as DesignListResponse,
