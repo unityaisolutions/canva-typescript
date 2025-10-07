@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export * from './shared';
 export { Apps, type AppRetrieveJwksResponse } from './apps';
 export {
   AssetUploads,
@@ -49,9 +50,11 @@ export {
 export { Connect, type ConnectRetrieveKeysResponse } from './connect';
 export {
   Designs,
+  type CustomDesignTypeInput,
   type Design,
   type DesignLinks,
   type DesignTypeInput,
+  type PresetDesignTypeInput,
   type DesignCreateResponse,
   type DesignRetrieveResponse,
   type DesignListResponse,

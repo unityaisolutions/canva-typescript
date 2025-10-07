@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../../core/resource';
 import * as CommentsAPI from '../../comments';
+import * as Shared from '../../shared';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -197,29 +198,7 @@ export namespace Reply {
     /**
      * Metadata for the user, consisting of the User ID, Team ID, and display name.
      */
-    user: Mentions.User;
-  }
-
-  export namespace Mentions {
-    /**
-     * Metadata for the user, consisting of the User ID, Team ID, and display name.
-     */
-    export interface User {
-      /**
-       * The name of the user as shown in the Canva UI.
-       */
-      display_name?: string;
-
-      /**
-       * The ID of the user's Canva Team.
-       */
-      team_id?: string;
-
-      /**
-       * The ID of the user.
-       */
-      user_id?: string;
-    }
+    user: Shared.TeamUser;
   }
 }
 
