@@ -8,9 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stainless-sdks/canva-typescript.git"
+    "url": "git+https://github.com/unityaisolutions/canva-typescript.git"
   },
-  "homepage": "https://github.com/stainless-sdks/canva-typescript/tree/main/packages/mcp-server#readme",
+  "homepage": "https://github.com/unityaisolutions/canva-typescript/tree/main/packages/mcp-server#readme",
   "documentation": "https://community.canva.dev/",
   "server": {
     "type": "node",
