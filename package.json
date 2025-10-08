@@ -1,12 +1,12 @@
 {
   "name": "canva",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The official TypeScript library for the Canva API",
   "author": "Canva <>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:stainless-sdks/canva-typescript",
+  "repository": "github:unityaisolutions/canva-typescript",
   "license": "Apache-2.0",
   "packageManager": "yarn@1.22.22",
   "files": [
