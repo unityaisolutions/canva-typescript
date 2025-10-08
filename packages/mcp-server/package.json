@@ -1,6 +1,6 @@
 {
   "name": "canva-mcp",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The official MCP Server for the Canva API",
   "author": "Canva <>",
   "types": "dist/index.d.ts",
