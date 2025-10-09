@@ -1,6 +1,6 @@
 {
   "name": "canva",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "The official TypeScript library for the Canva API",
   "author": "Canva <>",
   "types": "dist/index.d.ts",
