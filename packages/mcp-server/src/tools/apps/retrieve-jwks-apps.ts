@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'canva-mcp/filtering';
-import { Metadata, asTextContentResult } from 'canva-mcp/tools/types';
+import { isJqError, maybeFilter } from 'canva-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'canva-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import Canva from 'canva';
@@ -41,7 +41,14 @@ export const tool: Tool = {
 
 export const handler = async (client: Canva, args: Record<string, unknown> | undefined) => {
   const { appId, jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.apps.retrieveJwks(appId)));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.apps.retrieveJwks(appId)));
+  } catch (error) {
+    if (isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
