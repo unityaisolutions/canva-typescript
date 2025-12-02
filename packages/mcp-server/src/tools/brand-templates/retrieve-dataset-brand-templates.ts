@@ -46,7 +46,7 @@ export const handler = async (client: Canva, args: Record<string, unknown> | und
       await maybeFilter(jq_filter, await client.brandTemplates.retrieveDataset(brandTemplateId)),
     );
   } catch (error) {
-    if (isJqError(error)) {
+    if (error instanceof Canva.APIError || isJqError(error)) {
       return asErrorResult(error.message);
     }
     throw error;
