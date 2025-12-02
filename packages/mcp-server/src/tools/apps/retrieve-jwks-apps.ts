@@ -44,7 +44,7 @@ export const handler = async (client: Canva, args: Record<string, unknown> | und
   try {
     return asTextContentResult(await maybeFilter(jq_filter, await client.apps.retrieveJwks(appId)));
   } catch (error) {
-    if (isJqError(error)) {
+    if (error instanceof Canva.APIError || isJqError(error)) {
       return asErrorResult(error.message);
     }
     throw error;

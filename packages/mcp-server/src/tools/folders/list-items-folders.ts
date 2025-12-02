@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Metadata, asTextContentResult } from 'canva-mcp/tools/types';
+import { Metadata, asErrorResult, asTextContentResult } from 'canva-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import Canva from 'canva';
@@ -61,7 +61,14 @@ export const tool: Tool = {
 
 export const handler = async (client: Canva, args: Record<string, unknown> | undefined) => {
   const { folderId, ...body } = args as any;
-  return asTextContentResult(await client.folders.listItems(folderId, body));
+  try {
+    return asTextContentResult(await client.folders.listItems(folderId, body));
+  } catch (error) {
+    if (error instanceof Canva.APIError) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
