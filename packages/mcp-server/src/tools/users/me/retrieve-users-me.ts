@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'canva-mcp/filtering';
-import { Metadata, asTextContentResult } from 'canva-mcp/tools/types';
+import { isJqError, maybeFilter } from 'canva-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'canva-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import Canva from 'canva';
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'retrieve_users_me',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nReturns the User ID and Team ID of the user\naccount associated with the provided access token.\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    team_user: {\n      $ref: '#/$defs/team_user_summary'\n    }\n  },\n  required: [    'team_user'\n  ],\n  $defs: {\n    team_user_summary: {\n      type: 'object',\n      description: 'Metadata for the user, consisting of the User ID and Team ID.',\n      properties: {\n        team_id: {\n          type: 'string',\n          description: 'The ID of the user\\'s Canva Team.'\n        },\n        user_id: {\n          type: 'string',\n          description: 'The ID of the user.'\n        }\n      },\n      required: [        'team_id',\n        'user_id'\n      ]\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nReturns the User ID and Team ID of the user\naccount associated with the provided access token.\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/me_retrieve_response',\n  $defs: {\n    me_retrieve_response: {\n      type: 'object',\n      properties: {\n        team_user: {\n          $ref: '#/$defs/team_user_summary'\n        }\n      },\n      required: [        'team_user'\n      ]\n    },\n    team_user_summary: {\n      type: 'object',\n      description: 'Metadata for the user, consisting of the User ID and Team ID.',\n      properties: {\n        team_id: {\n          type: 'string',\n          description: 'The ID of the user\\'s Canva Team.'\n        },\n        user_id: {\n          type: 'string',\n          description: 'The ID of the user.'\n        }\n      },\n      required: [        'team_id',\n        'user_id'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -38,7 +38,14 @@ export const tool: Tool = {
 
 export const handler = async (client: Canva, args: Record<string, unknown> | undefined) => {
   const { jq_filter } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.users.me.retrieve()));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.users.me.retrieve()));
+  } catch (error) {
+    if (error instanceof Canva.APIError || isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };

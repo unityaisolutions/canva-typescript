@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'canva-mcp/filtering';
-import { Metadata, asTextContentResult } from 'canva-mcp/tools/types';
+import { isJqError, maybeFilter } from 'canva-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'canva-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import Canva from 'canva';
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'update_folders',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nUpdates a folder's details using its `folderID`.\nCurrently, you can only update a folder's name.\n\n# Response Schema\n```json\n{\n  type: 'object',\n  description: 'Details about the updated folder.',\n  properties: {\n    folder: {\n      $ref: '#/$defs/folder'\n    }\n  },\n  $defs: {\n    folder: {\n      type: 'object',\n      description: 'The folder object, which contains metadata about the folder.',\n      properties: {\n        id: {\n          type: 'string',\n          description: 'The folder ID.'\n        },\n        created_at: {\n          type: 'integer',\n          description: 'When the folder was created, as a Unix timestamp (in seconds since the\\nUnix Epoch).'\n        },\n        name: {\n          type: 'string',\n          description: 'The folder name.'\n        },\n        updated_at: {\n          type: 'integer',\n          description: 'When the folder was last updated, as a Unix timestamp (in seconds since the\\nUnix Epoch).'\n        },\n        thumbnail: {\n          $ref: '#/$defs/thumbnail'\n        }\n      },\n      required: [        'id',\n        'created_at',\n        'name',\n        'updated_at'\n      ]\n    },\n    thumbnail: {\n      type: 'object',\n      description: 'A thumbnail image representing the object.',\n      properties: {\n        height: {\n          type: 'integer',\n          description: 'The height of the thumbnail image in pixels.'\n        },\n        url: {\n          type: 'string',\n          description: 'A URL for retrieving the thumbnail image.\\nThis URL expires after 15 minutes. This URL includes a query string\\nthat\\'s required for retrieving the thumbnail.'\n        },\n        width: {\n          type: 'integer',\n          description: 'The width of the thumbnail image in pixels.'\n        }\n      },\n      required: [        'height',\n        'url',\n        'width'\n      ]\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nUpdates a folder's details using its `folderID`.\nCurrently, you can only update a folder's name.\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/folder_update_response',\n  $defs: {\n    folder_update_response: {\n      type: 'object',\n      description: 'Details about the updated folder.',\n      properties: {\n        folder: {\n          $ref: '#/$defs/folder'\n        }\n      }\n    },\n    folder: {\n      type: 'object',\n      description: 'The folder object, which contains metadata about the folder.',\n      properties: {\n        id: {\n          type: 'string',\n          description: 'The folder ID.'\n        },\n        created_at: {\n          type: 'integer',\n          description: 'When the folder was created, as a Unix timestamp (in seconds since the\\nUnix Epoch).'\n        },\n        name: {\n          type: 'string',\n          description: 'The folder name.'\n        },\n        updated_at: {\n          type: 'integer',\n          description: 'When the folder was last updated, as a Unix timestamp (in seconds since the\\nUnix Epoch).'\n        },\n        thumbnail: {\n          $ref: '#/$defs/thumbnail'\n        }\n      },\n      required: [        'id',\n        'created_at',\n        'name',\n        'updated_at'\n      ]\n    },\n    thumbnail: {\n      type: 'object',\n      description: 'A thumbnail image representing the object.',\n      properties: {\n        height: {\n          type: 'integer',\n          description: 'The height of the thumbnail image in pixels.'\n        },\n        url: {\n          type: 'string',\n          description: 'A URL for retrieving the thumbnail image.\\nThis URL expires after 15 minutes. This URL includes a query string\\nthat\\'s required for retrieving the thumbnail.'\n        },\n        width: {\n          type: 'integer',\n          description: 'The width of the thumbnail image in pixels.'\n        }\n      },\n      required: [        'height',\n        'url',\n        'width'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -43,7 +43,14 @@ export const tool: Tool = {
 
 export const handler = async (client: Canva, args: Record<string, unknown> | undefined) => {
   const { folderId, jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.folders.update(folderId, body)));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.folders.update(folderId, body)));
+  } catch (error) {
+    if (error instanceof Canva.APIError || isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
